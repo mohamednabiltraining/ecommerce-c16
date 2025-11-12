@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerce_app/api/model/response/BrandsResponse.dart';
 import 'package:ecommerce_app/api/model/response/CategoriesResponse.dart';
+import 'package:ecommerce_app/api/model/response/login_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -29,7 +30,15 @@ class ApiManager{
   }
   Future<BrandsResponse> getBrands()async{
     var response = await _dio.get("v1/brands");
-    var categoriesResponse = BrandsResponse.fromJson(response.data);
-    return categoriesResponse;
+    var brandsResponse = BrandsResponse.fromJson(response.data);
+    return brandsResponse;
+  }
+
+  Future<LoginResponse> login(String email , String password)async{
+
+      final response = await _dio.post('v1/auth/signin',
+        data: {"email": email, "password": password},
+      );
+      return LoginResponse.fromJson(response.data);
   }
 }

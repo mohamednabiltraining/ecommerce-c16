@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/features/auth/domain/entities/user_entity.dart';
+import 'package:ecommerce_app/domain/model/user_entity.dart';
 
 class AuthResult{
   final String message ;

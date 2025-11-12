@@ -1,8 +1,9 @@
+import 'package:ecommerce_app/domain/api_result.dart';
 import 'package:ecommerce_app/domain/model/Category.dart';
 
 abstract class CategoriesRepo{
   // abstract functions only
-  Future<List<Category>> getCategories();
+  Future<Result<List<Category>>> getCategories();
 }
 
 // domain is a separate layer

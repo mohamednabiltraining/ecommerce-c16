@@ -23,7 +23,6 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   injectable:
   get_it:
-  dartz:
   provider:
 
 dev_dependencies:

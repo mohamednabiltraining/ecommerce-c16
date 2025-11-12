@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/di/di.dart';
 import 'package:ecommerce_app/core/resources/assets_manager.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
@@ -5,16 +6,11 @@ import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/custom_elevated_button.dart';
 import 'package:ecommerce_app/core/widget/main_text_field.dart';
 import 'package:ecommerce_app/core/widget/validators.dart';
-import 'package:ecommerce_app/features/auth/data/auth_repo_impl/auth_repo_impl.dart';
-import 'package:ecommerce_app/features/auth/data/data_sources/auth_remote_data_source/auth_remote_data_source.dart';
-import 'package:ecommerce_app/features/auth/data/data_sources/auth_remote_data_source/auth_remote_data_source_impl.dart';
-import 'package:ecommerce_app/features/auth/domain/auth_repository/auth_repository.dart';
-import 'package:ecommerce_app/features/auth/domain/usecasae/login_use_case.dart';
+import 'package:ecommerce_app/features/presentation_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../core/resources/font_manager.dart';
 import '../../../../core/resources/styles_manager.dart';
 import '../view_model/login_view_model.dart';
@@ -45,12 +41,11 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
+  LoginViewModel viewModel = getIt.get<LoginViewModel>();
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => LoginViewModel(
-        LoginUseCase(AuthRepoImpl(AuthRemoteDataSourceImpl())),
-      ),
+    return ChangeNotifierProvider.value(
+      value: viewModel,
       child: Scaffold(
         backgroundColor: ColorManager.primary,
         body: SafeArea(
@@ -69,11 +64,11 @@ class _SignInScreenState extends State<SignInScreen> {
                 }
 
                 if (viewModel.state == LoginState.error &&
-                    viewModel.errorMessage != null) {
+                    viewModel.error != null) {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(viewModel.errorMessage!),
+                        content: Text(context.getErrorMessage(viewModel.error!)),
                         backgroundColor: Colors.red,
                       ),
                     );
