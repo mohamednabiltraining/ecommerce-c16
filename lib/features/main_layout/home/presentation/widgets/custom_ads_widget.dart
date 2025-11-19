@@ -5,17 +5,40 @@ import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomAdsWidget extends StatelessWidget {
+class CustomAdsWidget extends StatefulWidget {
   final List<String> adsImages;
-  final int currentIndex;
-  final Timer timer;
 
   const CustomAdsWidget({
     super.key,
     required this.adsImages,
-    required this.currentIndex,
-    required this.timer,
   });
+
+  @override
+  State<CustomAdsWidget> createState() => _CustomAdsWidgetState();
+}
+
+class _CustomAdsWidgetState extends State<CustomAdsWidget> {
+  int _currentIndex = 0;
+
+  late Timer _timer;
+
+  void _startImageSwitching() {
+    _timer = Timer.periodic(const Duration(milliseconds: 2500), (Timer timer) {
+      setState(() {
+        _currentIndex = (_currentIndex + 1) % widget.adsImages.length;
+      });
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    _startImageSwitching();
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +51,8 @@ class CustomAdsWidget extends StatelessWidget {
             child: Image.asset(
               height: 210.h,
               width: double.infinity,
-              adsImages[currentIndex],
-              key: ValueKey<int>(currentIndex),
+              widget.adsImages[_currentIndex],
+              key: ValueKey<int>(_currentIndex),
             ),
           ),
           SizedBox(
@@ -37,8 +60,8 @@ class CustomAdsWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
-              children: adsImages.map((image) {
-                int index = adsImages.indexOf(image);
+              children: widget.adsImages.map((image) {
+                int index = widget.adsImages.indexOf(image);
                 return Container(
                   width: 8.w,
                   height: 8.h,
@@ -48,7 +71,7 @@ class CustomAdsWidget extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: currentIndex == index
+                    color: _currentIndex == index
                         ? ColorManager.primary
                         : Colors.grey,
                   ),

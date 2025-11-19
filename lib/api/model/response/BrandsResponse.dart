@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/api/model/pagination_dto.dart';
-import 'brand_dto.dart';
+import '../brand_dto.dart';
 
 /// results : 54
 /// metadata : {"currentPage":1,"numberOfPages":2,"limit":40,"nextPage":2}

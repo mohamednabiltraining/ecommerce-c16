@@ -1,14 +1,19 @@
+import 'dart:ffi';
+
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'font_manager.dart';
 
-TextStyle _getTextStyle(double fontSize, FontWeight fontWeight, Color color) {
+TextStyle _getTextStyle(double fontSize, FontWeight fontWeight, Color color,
+    [double? height]) {
   return TextStyle(
       fontSize: fontSize,
       fontFamily: FontConstants.fontFamily,
       color: color,
-      fontWeight: fontWeight);
+      fontWeight: fontWeight,
+    height: height
+  );
 }
 
 // regular style
@@ -21,15 +26,15 @@ TextStyle getLightStyle(
 // regular style
 
 TextStyle getRegularStyle(
-    {double fontSize = FontSize.s12, required Color color}) {
-  return _getTextStyle(fontSize, FontWeightManager.regular, color);
+    {double fontSize = FontSize.s12, required Color color,double? height}) {
+  return _getTextStyle(fontSize, FontWeightManager.regular, color,height);
 }
 
 // medium style
 
 TextStyle getMediumStyle(
-    {double fontSize = FontSize.s12, required Color color}) {
-  return _getTextStyle(fontSize, FontWeightManager.medium, color);
+    {double fontSize = FontSize.s12, required Color color,double? height}) {
+  return _getTextStyle(fontSize, FontWeightManager.medium, color, height);
 }
 
 // bold style

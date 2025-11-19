@@ -1,20 +1,24 @@
 import 'package:equatable/equatable.dart';
 
-sealed class ComponentState<T>{}
-
-class InitialState<T> extends ComponentState<T> with EquatableMixin {
+sealed class ComponentState<T> extends Equatable{
   @override
   List<Object?> get props => [];
 }
-class LoadingState<T> extends ComponentState<T> with EquatableMixin{
+
+class InitialState<T> extends ComponentState<T>{
+  @override
+  List<Object?> get props => [];
+}
+class LoadingState<T> extends ComponentState<T>{
   @override
   List<Object?> get props => [];
 }
 class ErrorState<T> extends ComponentState<T>{
   Exception? exception;
   ErrorState(this.exception);
+
 }
-class SuccessState<T> extends ComponentState<T> with EquatableMixin{
+class SuccessState<T> extends ComponentState<T>{
   T data;
   SuccessState(this.data);
   @override
